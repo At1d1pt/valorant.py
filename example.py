@@ -1,5 +1,4 @@
 import valorant
 
 client = valorant.Client()
-role = client.role('duelist')
-print(role.name)
+print(client.agent(name='jett').voicelines.get_voice_line(878055936 , 'wav'))

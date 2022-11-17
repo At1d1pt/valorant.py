@@ -1,4 +1,6 @@
 from .role import Role
+from .ability import Ability
+from .voiceline import VoicelineSet
 
 class Agent:
     def __init__(self, data) -> None:
@@ -79,3 +81,29 @@ class Agent:
     @property
     def role(self):
         return Role(self.raw['role'])
+
+    @property
+    def abilities(self):
+        a = []
+
+        for ability in self.raw['abilities']:
+            a.append(Ability(ability))
+
+        return a
+
+    @property
+    def voicelines(self):
+        return VoicelineSet(self.raw['voiceLine'])
+
+    def get_ability(self, slot: str = None):
+        if slot is None:
+            return self.abilities
+        else:
+            for ability in self.abilities:
+                if ability.slot.lower() == slot.lower():
+                    x = ability
+                    break
+                else:
+                    continue
+
+            return x
