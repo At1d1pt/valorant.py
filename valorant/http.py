@@ -1,8 +1,10 @@
 import requests
 
 from .exceptions import InvalidRequest
+
 from .agent import Agent
 from .role import Role
+from .weapon import Weapon
 
 class Client:
     def __init__(self) -> None:
@@ -64,3 +66,23 @@ class Client:
                 continue
 
         return r
+
+    def weapon(self, name: str = None, uuid: str = None):
+        if name is not None:
+            to_fetch = ['displayName', name.capitalize()]
+        elif uuid is not None:
+            to_fetch = ['uuid' , uuid]
+        else:
+            raise InvalidRequest("Neither name nor uuid was not provided.")
+
+        r = self.get_(self.base_url+'weapons', json_=True)
+        data = r['data']
+
+        for i in data:
+            if i[to_fetch[0]] == to_fetch[1]:
+                w = Weapon(i)
+                break
+            else:
+                continue
+
+        return w

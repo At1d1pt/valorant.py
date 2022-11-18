@@ -1,4 +1,6 @@
 import valorant
 
 client = valorant.Client()
-print(client.agent(name='jett').voicelines.get_voice_line(878055936 , 'wav'))
+
+weapon = client.weapon(name='Phantom')
+print(f"{weapon.name} [{weapon.category_short}]")
